@@ -4,13 +4,13 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.response import Response
 from django.contrib.auth.models import User
-from .models import UsersMetaData
+from .models import AllUsersMetaData
 
 
 class GetUser(APIView):
     #TODO:return valuev of all the fields that exists in model
     def get(self,request):
-        user_details = UsersMetaData.objects.get(user=request.user)
+        user_details = AllUsersMetaData.objects.get(user=request.user)
         content = {
             "message":"successfull",
             "id":request.user.id,

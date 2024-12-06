@@ -8,7 +8,6 @@ from .models import AllUsersMetaData
 
 
 class GetUser(APIView):
-    #TODO:return valuev of all the fields that exists in model
     def get(self,request):
         user_details = AllUsersMetaData.objects.get(user=request.user)
         content = {

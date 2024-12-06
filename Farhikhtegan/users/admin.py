@@ -5,7 +5,7 @@ from .forms import *
 admin.site.register(AllUsersMetaData)
 
 class TeachersMetaDataAdmin(admin.ModelAdmin):
-    filter_horizontal = ('lessons',)  
+    filter_horizontal = ('lessons','classes')  
     form = TeachersMetaDataForm
 admin.site.register(TeachersMetaData, TeachersMetaDataAdmin)    
 

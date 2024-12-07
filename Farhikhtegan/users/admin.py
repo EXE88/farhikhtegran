@@ -12,3 +12,7 @@ admin.site.register(TeachersMetaData, TeachersMetaDataAdmin)
 class StudentsMetaDataAdmin(admin.ModelAdmin):
     form = StudentsMetaDataForm
 admin.site.register(StudentsMetaData, StudentsMetaDataAdmin)
+
+class WhatEveryTeacherTeachForEachClassAdmin(admin.ModelAdmin):
+    form = WhatEveryTeacherTeachForEachClassForm
+admin.site.register(WhatEveryTeacherTeachForEachClass,WhatEveryTeacherTeachForEachClassAdmin)

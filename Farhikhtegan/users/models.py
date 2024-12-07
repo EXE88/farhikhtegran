@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User,Group
 from lessons.models import *
 
-#TODO:is your field have blank=False and null=False if you add new field to your model past models will get an error in database so sloution is add default option to you model
+#TODO:is your field have blank=False and null=False if you add new field to your model past models will get an error in database so sloution is add default option to you model and add farsi verbos names
 
 class AllUsersMetaData(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,blank=False)
@@ -21,6 +21,15 @@ class TeachersMetaData(models.Model):
     def __str__(self):
         user_metadata = AllUsersMetaData.objects.filter(user=self.user).first()
         return f"{user_metadata.first_name} {user_metadata.last_name}"
+
+class WhatEveryTeacherTeachForEachClass(models.Model):
+    teacher = models.ForeignKey(User,on_delete=models.CASCADE,blank=False)
+    school_class = models.ForeignKey(Group,on_delete=models.CASCADE,blank=False)
+    lesson = models.ForeignKey(Lesson,on_delete=models.CASCADE,blank=False)
+
+    def __str__(self):
+        teacher_fullname = AllUsersMetaData.objects.get(user=self.teacher)
+        return f"{teacher_fullname.first_name} {teacher_fullname.last_name}-{self.school_class.name}-{self.lesson.name}"
 
 class StudentsMetaData(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,blank=False)

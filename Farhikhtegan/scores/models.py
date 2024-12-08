@@ -5,14 +5,13 @@ from django.core.validators import MinValueValidator , MaxValueValidator
 import jdatetime
 from users.models import AllUsersMetaData
 
-#TODO:add fardsi verbos names
 class CreateStudentScore(models.Model):
-    from_teacher = models.ForeignKey(User,blank=False,on_delete=models.CASCADE,related_name="students_score_as_from_teacher")
-    to_student = models.ForeignKey(User,blank=False,on_delete=models.CASCADE,related_name="students_score_as_to_student")
+    from_teacher = models.ForeignKey(User,blank=False,on_delete=models.CASCADE,related_name="students_score_as_from_teacher",verbose_name="از طرف معلم")
+    to_student = models.ForeignKey(User,blank=False,on_delete=models.CASCADE,related_name="students_score_as_to_student",verbose_name="به دانش اموز")
     created_at = models.DateTimeField(auto_now_add=True,blank=False)
     updated_at = models.DateTimeField(auto_now=True,blank=False)
-    lesson = models.ForeignKey(Lesson,blank=False,on_delete=models.CASCADE)
-    score = models.FloatField(validators=[MinValueValidator(0),MaxValueValidator(20)],blank=False)
+    lesson = models.ForeignKey(Lesson,blank=False,on_delete=models.CASCADE,verbose_name="درس")
+    score = models.FloatField(validators=[MinValueValidator(0),MaxValueValidator(20)],blank=False,verbose_name="نمره")
 
     def created_at_jalali(self):
         return jdatetime.datetime.fromgregorian(datetime=self.created_at).strftime('%Y/%m/%d')

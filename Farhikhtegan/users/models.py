@@ -2,8 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User,Group
 from lessons.models import *
 
-#TODO:add farsi verbose names
-
 class AllUsersMetaData(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,blank=False , verbose_name="کاربر")
     first_name = models.CharField(max_length=50,blank=False , verbose_name="نام")

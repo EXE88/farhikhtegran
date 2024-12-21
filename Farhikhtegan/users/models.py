@@ -3,8 +3,6 @@ from django.contrib.auth.models import User,Group
 from lessons.models import *
 from django.core.exceptions import ValidationError
 
-#TODO: use Meta class and add unique to fileds remove thah lines of code from clean
-
 class AllUsersMetaData(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,blank=False , verbose_name="کاربر")
     first_name = models.CharField(max_length=50,blank=False , verbose_name="نام")

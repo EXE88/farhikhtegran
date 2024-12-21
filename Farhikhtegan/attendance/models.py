@@ -6,8 +6,6 @@ import jdatetime
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 
-#TODO:return back created_at_jalali , updated_at_jajli inside of the models in the admin file didnt work
-
 class StudentAttendance(models.Model):
     from_teacher = models.ForeignKey(User,on_delete=models.CASCADE,blank=False,related_name="student_attendancea_as_from_teacher",verbose_name="از طرف معلم")
     to_student = models.ForeignKey(User,on_delete=models.CASCADE,blank=False,related_name="student_attendancea_as_to_student",verbose_name="به دانش اموز")

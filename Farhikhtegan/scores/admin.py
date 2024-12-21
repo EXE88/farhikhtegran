@@ -7,7 +7,7 @@ class CreateStudentsScoreAdmin(admin.ModelAdmin):
     readonly_fields = ('created_at_jalali','updated_at_jalali')
     list_display = ('teacher','student','lesson','score','created_at_jalali','updated_at_jalali')
     search_fields = ('id',)
-    list_filter = ("lesson","created_at")
+    list_filter = ("lesson",)
     form = CreateStudentsScoreForm
 
     def created_at_jalali(self,obj):
@@ -30,5 +30,15 @@ class CreateStudentsScoreAdmin(admin.ModelAdmin):
 
     def get_search_results(self, request, queryset, search_term):
         if search_term:
-            queryset = queryset.filter(from_teacher__allusersmetadata__first_name__icontains=search_term) | queryset.filter(from_teacher__allusersmetadata__last_name__icontains=search_term) | queryset.filter(to_student__allusersmetadata__first_name__icontains=search_term) | queryset.filter(to_student__allusersmetadata__last_name__icontains=search_term) | queryset.filter(lesson__name__icontains=search_term)
+            queryset = queryset.filter(
+                from_teacher__allusersmetadata__first_name__icontains=search_term
+            ) | queryset.filter(
+                from_teacher__allusersmetadata__last_name__icontains=search_term
+            ) | queryset.filter(
+                to_student__allusersmetadata__first_name__icontains=search_term
+            ) | queryset.filter(
+                to_student__allusersmetadata__last_name__icontains=search_term
+            ) | queryset.filter(
+                lesson__name__icontains=search_term
+            ) 
         return queryset, False

@@ -8,7 +8,8 @@ class StudentAttendanceAdmin(admin.ModelAdmin):
     form = StudentAttendanceForm
     readonly_fields = ('created_at_jalali','updated_at_jalali')
     list_display = ("teacher",'student',"in_lesson","is_present",'created_at_jalali', 'updated_at_jalali')
-    #list_filter = ('created_at_jalali', 'updated_at_jalali')
+    list_filter = ("in_lesson__name","is_present")
+    search_fields = ("id",)
 
     def created_at_jalali(self,obj):
         return jdatetime.datetime.fromgregorian(datetime=obj.created_at).strftime('%Y/%m/%d')
@@ -26,3 +27,16 @@ class StudentAttendanceAdmin(admin.ModelAdmin):
         details = AllUsersMetaData.objects.get(user=obj.to_student)
         return details.first_name + " " + details.last_name
     student.short_description = "به دانش اموز"
+
+    def get_search_results(self, request, queryset, search_term):
+        if search_term:
+            queryset = queryset.filter(
+                from_teacher__allusersmetadata__first_name__icontains=search_term
+            ) | queryset.filter(
+                from_teacher__allusersmetadata__last_name__icontains=search_term
+            ) | queryset.filter(
+                to_student__allusersmetadata__first_name__icontains=search_term
+            ) | queryset.filter(
+                to_student__allusersmetadata__last_name__icontains=search_term
+            )
+        return queryset , False

@@ -4,6 +4,8 @@ from lessons.models import Lesson
 from django.core.validators import MinValueValidator , MaxValueValidator
 import jdatetime
 from users.models import AllUsersMetaData
+from django.core.exceptions import ValidationError
+from users.models import *
 
 class CreateStudentScore(models.Model):
     from_teacher = models.ForeignKey(User,blank=False,on_delete=models.CASCADE,related_name="students_score_as_from_teacher",verbose_name="از طرف معلم")
@@ -13,14 +15,23 @@ class CreateStudentScore(models.Model):
     lesson = models.ForeignKey(Lesson,blank=False,on_delete=models.CASCADE,verbose_name="درس")
     score = models.FloatField(validators=[MinValueValidator(0),MaxValueValidator(20)],blank=False,verbose_name="نمره")
 
-    def created_at_jalali(self):
-        return jdatetime.datetime.fromgregorian(datetime=self.created_at).strftime('%Y/%m/%d')
+    def clean(self):
+        teacher_classes = self.from_teacher.groups.all()
+        student_groups = self.to_student.groups.all()
 
-    def updated_at_jalali(self):
-        return jdatetime.datetime.fromgregorian(datetime=self.updated_at).strftime('%Y/%m/%d')
-    
-    def __str__(self):
-        teacher = AllUsersMetaData.objects.get(user=self.from_teacher)
-        student = AllUsersMetaData.objects.get(user=self.to_student)
+        if not student_groups.intersection(teacher_classes):
+            raise ValidationError("این دانش اموز در جزو دانش اموزان این معلم نیست")
+
+        student_group = self.to_student.groups.first()
+        teacher_lesson_assignment_exists = TeacherLessonAssignment.objects.filter(
+            teacher=self.from_teacher, 
+            school_class=student_group, 
+            lesson=self.lesson
+        ).exists()
         
-        return f"{teacher.first_name} {teacher.last_name}-{student.first_name} {student.last_name}-{self.lesson.name}"
+        if not teacher_lesson_assignment_exists:
+            raise ValidationError("این معلم نمیتواند به این دانش اموزش در این درس نمره بدهد")
+
+    def save(self, *args, **kwargs):
+        self.clean() 
+        super().save(*args, **kwargs)

@@ -2,8 +2,18 @@ from django import forms
 from django.contrib.auth.models import User
 from .models import *
 from users.models import AllUsersMetaData
+from users.models import *
+
+class CustomUserChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        metadata = AllUsersMetaData.objects.filter(user=obj).first()
+        if metadata:
+            return f"{metadata.first_name} {metadata.last_name}"
+        return obj.username 
 
 class CreateStudentsScoreForm(forms.ModelForm):
+    from_teacher = CustomUserChoiceField(queryset=AllUsersMetaData.objects.values_list('user', flat=True))
+    to_student = CustomUserChoiceField(queryset=AllUsersMetaData.objects.values_list('user', flat=True))
     class Meta:
         model = CreateStudentScore
         fields = '__all__'

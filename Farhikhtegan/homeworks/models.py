@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User , Group
 from lessons.models import Lesson
+from users.models import TeacherLessonAssignment
+from django.core.exceptions import ValidationError
 
 class HomeWork(models.Model):
     from_teacher = models.ForeignKey(User,on_delete=models.CASCADE,blank=False,verbose_name="از طرف معلم")
@@ -15,3 +17,15 @@ class HomeWork(models.Model):
         class_name = self.for_class.name
         lesson = self.for_lesson.name
         return f"{class_name}-{lesson}"
+    
+    def clean(self):
+        if not TeacherLessonAssignment.objects.filter(
+            teacher=self.from_teacher, 
+            school_class=self.for_class, 
+            lesson=self.for_lesson
+        ).exists():
+            raise ValidationError("این معلم نمیتواند به این کلاس یا در این درس تکلیف بدهد")
+
+    def save(self,*args, **kwargs):
+        self.clean()
+        return super().save(*args, **kwargs)

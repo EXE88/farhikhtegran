@@ -1,5 +1,5 @@
 from django import forms
-from .models import AllUsersMetaData , TeachersMetaData , StudentsMetaData , WhatEveryTeacherTeachForEachClass
+from .models import AllUsersMetaData , TeachersMetaData , StudentsMetaData , TeacherLessonAssignment
 from django.contrib.auth.models import User
 
 class CustomUserChoiceField(forms.ModelChoiceField):
@@ -32,10 +32,10 @@ class StudentsMetaDataForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['user'].queryset = User.objects.filter(allusersmetadata__is_teacher=False)
 
-class WhatEveryTeacherTeachForEachClassForm(forms.ModelForm):
+class TeacherLessonAssignmentForm(forms.ModelForm):
     teacher = CustomUserChoiceField(queryset=AllUsersMetaData.objects.values_list('user', flat=True))
     class Meta:
-        model = WhatEveryTeacherTeachForEachClass
+        model = TeacherLessonAssignment
         fields = '__all__'
 
     def __init__(self, *args, **kwargs):

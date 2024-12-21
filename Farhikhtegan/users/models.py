@@ -3,6 +3,8 @@ from django.contrib.auth.models import User,Group
 from lessons.models import *
 from django.core.exceptions import ValidationError
 
+#TODO: use Meta class and add unique to fileds remove thah lines of code from clean
+
 class AllUsersMetaData(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,blank=False , verbose_name="کاربر")
     first_name = models.CharField(max_length=50,blank=False , verbose_name="نام")
@@ -12,14 +14,11 @@ class AllUsersMetaData(models.Model):
 
     def clean(self):
         if AllUsersMetaData.objects.filter(user=self.user).exclude(id=self.id).exists():
-            raise ValidationError(f"اطلاعات برای این کاربر ({self.user}) قبلاً ثبت شده است.")
+            raise ValidationError(f"این اطلاعات قبلا ثبت شده است")
 
     def save(self, *args, **kwargs):
         self.clean() 
         super().save(*args, **kwargs)
-
-    def __str__(self):
-        return f"{self.first_name} {self.last_name}"
     
 class TeachersMetaData(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,blank=False , verbose_name="کاربر")
@@ -28,15 +27,11 @@ class TeachersMetaData(models.Model):
 
     def clean(self):
         if TeachersMetaData.objects.filter(user=self.user).exclude(id=self.id).exists():
-            raise ValidationError(f"اطلاعات برای این کاربر ({self.user}) قبلاً ثبت شده است.")
+            raise ValidationError(f"این اطلاعات قبلا ثبت شده است")
 
     def save(self, *args, **kwargs):
         self.clean() 
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        user_metadata = AllUsersMetaData.objects.filter(user=self.user).first()
-        return f"{user_metadata.first_name} {user_metadata.last_name}"
+        super().save(*args, **kwargs) 
 
 class StudentsMetaData(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,blank=False , verbose_name="دانش اموز")
@@ -59,29 +54,29 @@ class StudentsMetaData(models.Model):
 
     def clean(self):
         if StudentsMetaData.objects.filter(user=self.user).exclude(id=self.id).exists():
-            raise ValidationError(f"اطلاعات برای این کاربر ({self.user}) قبلاً ثبت شده است.")
+            raise ValidationError(f"این اطلاعات قبلا ثبت شده است")
 
     def save(self, *args, **kwargs):
         self.clean() 
         super().save(*args, **kwargs)
-
-    def __str__(self):
-        user_metadata = AllUsersMetaData.objects.filter(user=self.user).first()
-        return f"{user_metadata.first_name} {user_metadata.last_name}"
     
-class WhatEveryTeacherTeachForEachClass(models.Model):
+class TeacherLessonAssignment(models.Model):
     teacher = models.ForeignKey(User,on_delete=models.CASCADE,blank=False , verbose_name="معلم")
     school_class = models.ForeignKey(Group,on_delete=models.CASCADE,blank=False , verbose_name="کلاس")
     lesson = models.ForeignKey(Lesson,on_delete=models.CASCADE,blank=False , verbose_name="درس")
 
     def clean(self):
-        if WhatEveryTeacherTeachForEachClass.objects.filter(teacher=self.teacher,school_class=self.school_class,lesson=self.lesson).exclude(id=self.id).exists():
-            raise ValidationError(f"اطلاعات برای این کاربر ({self.teacher}) قبلاً ثبت شده است.")
-
+        teacher_classes = User.objects.get(username=self.teacher.username).groups.all()
+        if self.school_class not in teacher_classes:
+            raise ValidationError("معلم مورد نظر این کلاس را بر نداشته است")
+        
+        teacher_lessons = TeachersMetaData.objects.get(user=self.teacher).lessons.all()
+        if self.lesson not in teacher_lessons:
+            raise ValidationError("معلم مورد نظر این درس را بر نداشته است")
+        
+        if TeacherLessonAssignment.objects.filter(teacher=self.teacher,school_class=self.school_class,lesson=self.lesson).exclude(id=self.id).exists():
+            raise ValidationError(f"این اطلاعات قبلا ثبت شده است")
+        
     def save(self, *args, **kwargs):
         self.clean() 
         super().save(*args, **kwargs)
-
-    def __str__(self):
-        teacher_fullname = AllUsersMetaData.objects.get(user=self.teacher)
-        return f"{teacher_fullname.first_name} {teacher_fullname.last_name}-{self.school_class.name}-{self.lesson.name}"

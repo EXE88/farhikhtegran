@@ -1,36 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Student Dashboard</title>
+    <title>مدرسه فرهیختگان</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="styles/main_style.css" />
     <link rel="stylesheet" href="styles/navbar.css" />
+    <link rel="stylesheet" href="styles/fonts.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <script type="module" src="js/main_script.js"></script>
   </head>
   <body>
     <nav class="top-navbar">
-      <div class="school-name">Farhikhtegan School</div>
+      <div class="school-name">مدرسه فرهیختگان</div>
       <div class="navbar-right">
         <div class="profile-dropdown">
           <button class="profile-button">
             <i class="bi bi-person-circle"></i>
-            <span>Profile</span>
+            <span>پروفایل</span>
           </button>
           <div class="dropdown-content">
             <div class="user-info">
-              <p><strong>Name:</strong> <span id="userName">John Doe</span></p>
-              <p><strong>Class:</strong> <span id="userClass">10-A</span></p>
-              <p><strong>Grade:</strong> <span id="userGrade">10th</span></p>
-              <p><strong>Phone:</strong> <span id="userPhone">+1234567890</span></p>
+              <p><strong>نام:</strong> <span id="userName">دانیال خانی</span></p>
+              <p><strong>کلاس:</strong> <span id="userClass">دهم ریاضی تجربی</span></p>
+              <p><strong>پایه:</strong> <span id="userGrade">دهم</span></p>
+              <p><strong>رشته:</strong> <span id="userGrade">ریاضی</span></p>
+              <p><strong>سن:</strong> <span id="userPhone">16</span></p>
             </div>
             <a href="#profile" class="dropdown-item" data-page="profile">
-              <i class="bi bi-gear"></i> Settings
+              <i class="bi bi-gear"></i> تنظیمات
             </a>
             <a href="#" class="dropdown-item danger">
-              <i class="bi bi-box-arrow-right"></i> Logout
+              <i class="bi bi-box-arrow-right"></i> خروج
             </a>
           </div>
         </div>
@@ -39,54 +41,54 @@
 
     <main>
       <section id="home" class="page active">
-        <h1>Home</h1>
+        <h1>خانه</h1>
       </section>
 
       <section id="profile" class="page">
-        <h1>Profile</h1>
+        <h1>پروفایل</h1>
       </section>
 
       <section id="scores" class="page">
-        <h1>Scores</h1>
+        <h1>نمرات</h1>
       </section>
 
       <section id="messages" class="page">
-        <h1>Messages</h1>
+        <h1>پیام ها</h1>
       </section>
 
       <section id="homework" class="page">
-        <h1>Homework</h1>
+        <h1>تکالیف</h1>
       </section>
 
       <section id="attendance" class="page">
-        <h1>Attendance</h1>
+        <h1>وضعیت حضور</h1>
       </section>
     </main>
 
     <nav class="bottom-nav">
-      <a href="#home" class="nav-item active" data-page="home">
-        <i class="bi bi-house-fill"></i>
-        <span>Home</span>
-      </a>
       <a href="#profile" class="nav-item" data-page="profile">
         <i class="bi bi-person"></i>
-        <span>Profile</span>
+        <span>پروفایل</span>
       </a>
       <a href="#scores" class="nav-item" data-page="scores">
         <i class="bi bi-trophy"></i>
-        <span>Scores</span>
+        <span>نمرات</span>
       </a>
       <a href="#messages" class="nav-item" data-page="messages">
         <i class="bi bi-chat-dots"></i>
-        <span>Messages</span>
+        <span>پیام ها</span>
+      </a>
+      <a href="#home" class="nav-item active" data-page="home">
+        <i class="bi bi-house-fill"></i>
+        <span>خانه</span>
       </a>
       <a href="#homework" class="nav-item" data-page="homework">
         <i class="bi bi-book"></i>
-        <span>Homework</span>
+        <span>تکالیف</span>
       </a>
       <a href="#attendance" class="nav-item" data-page="attendance">
         <i class="bi bi-calendar-check"></i>
-        <span>Attendance</span>
+        <span>حضور</span>
       </a>
     </nav>
   </body>

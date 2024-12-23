@@ -7,10 +7,11 @@
 
 body {
   margin: 0;
-  font-family: system-ui, sans-serif;
+  font-family: vazir, sans-serif;
   color: black;
   background-color: white;
   padding-bottom: 80px;
+  overflow: hidden;
 }
 
 h1 {
@@ -59,7 +60,7 @@ main {
   justify-content: center;
   text-decoration: none;
   color: #666;
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   padding: 8px 12px;
   width: 20%;
   touch-action: manipulation;
@@ -72,7 +73,7 @@ main {
 
 .nav-item.active {
   color: #2563eb;
-  position: relative;
+  position:relative;
 }
 
 .nav-item.active::after {

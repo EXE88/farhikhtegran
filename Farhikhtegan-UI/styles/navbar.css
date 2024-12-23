@@ -9,11 +9,11 @@
 }
 
 .school-name {
-  font-family: 'Dancing Script', cursive;
+  font-family: 'vazir', cursive;
   font-size: 1.75rem; /* Adjusted for mobile */
   font-weight: bold;
   background: linear-gradient(to right, #ffffff, #e2e8f0);
-  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
   letter-spacing: 1px;
@@ -30,6 +30,7 @@
 }
 
 .profile-button {
+  font-family: vazir;
   background: none;
   border: none;
   color: white;

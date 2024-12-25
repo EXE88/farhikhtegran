@@ -4,6 +4,7 @@
     "build": "mkdir dist && cp -r index.html styles js dist/ && cp -r node_modules/bootstrap-icons dist/bootstrap-icons"
   },
   "dependencies": {
+    "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
     "servor": "^4.0.2"
   }

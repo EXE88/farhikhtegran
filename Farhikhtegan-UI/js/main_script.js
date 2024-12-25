@@ -1,8 +1,12 @@
 import { initializeNavbar } from './navbar.js';
+import { initializeClassPopup } from './class-popup.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize navbar
   initializeNavbar();
+
+  //Initialize class popup
+  initializeClassPopup();
   
   // Bottom navigation functionality
   const navItems = document.querySelectorAll('.nav-item');

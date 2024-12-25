@@ -64,6 +64,7 @@
   overflow: hidden;
   z-index: 1000;
   margin-top: 8px;
+  direction: rtl;
 }
 
 .dropdown-content.show {

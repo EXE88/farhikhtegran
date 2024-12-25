@@ -12,6 +12,13 @@ fetch('../html/top-navbar.html')
 fetch('../html/home-tab.html')
 .then(response => response.text())
 .then(data => {
+    document.getElementById('class-list-div').insertAdjacentHTML("beforeend",data)
+})
+.catch(error => console.error('Error loading HTML:',error));
+
+fetch('../html/class-details-popup.html')
+.then(response => response.text())
+.then(data => {
     document.getElementById('tabs-content').insertAdjacentHTML("beforeend",data)
 })
 .catch(error => console.error('Error loading HTML:',error));

@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'scores',
     'homeworks',
     'attendance',
+    'comments',
 ]
 
 MIDDLEWARE = [

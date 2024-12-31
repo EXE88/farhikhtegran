@@ -1,101 +1,51 @@
-// Mock data for demonstration
-const classData = {
-    math101: {
-        title: 'دهم ریاضی تجربی',
-        professor: 'بهنام مددی',
-        lessons: ['ریاضی','هندسه'],
-        room: 'دهم تجربی ریاضی',
-        students_number: 30,
-        students: [
-            { subject: 'ریاضی', name: 'دانیال خانی' },
-            { subject: 'تجربی', name: 'بهرام قدیم قبادی' },
-            { subject: 'تجربی', name: 'امیرعلی شوفری' },
-            { subject: 'ریاضی', name: 'اردا نظری' },
-            { subject: 'تجربی', name: 'محمد مهدی صمدی' },
-            { subject: 'ریاضی', name: 'حسین عبدی' },      
-        ]
-    },
-    phys201: {
-        title: 'دهم انسانی',
-        professor: 'صمد صمدی',
-        lessons: 'فیزیک',
-        room: 'دهم انسانی',
-        students_number: 25,
-        students: [
-            { subject: 'ریاضی', name: 'صمدی' },
-            { subject: 'ریاضی', name: 'صمدی' },
-            { subject: 'ریاضی', name: 'صمدی' },
-        ]
-    },
-    chemestry: {
-        title: 'دوازدهم انسانی',
-        professor: 'صمد صمدی',
-        lessons: 'شیمی',
-        room: 'دوازدهم انسانی',
-        students_number: 9,
-        students: [
-            { subject: 'ریاضی', name: 'صمدی' },
-            { subject: 'ریاضی', name: 'صمدی' },
-            { subject: 'ریاضی', name: 'صمدی' },
-        ]
-    }    
-};
+import {list_of_classes , global_data} from "./data.js";
 
+//list classes
 export function initializeClassPopup() {
-    try {
-        Object.keys(classData).forEach(key => {
-            const data = `        
-            <div class="class-card" data-class-id="${key}">
-            <h2>${classData[key].title}</h2>
-            <p><i class="bi bi-book"></i>${classData[key].lessons}</p>
-            <p><i class="bi bi-people"></i> ${classData[key].students_number} دانش اموز</p>
+    if (global_data.is_teacher === true) {
+        list_of_classes.forEach(class_details => {
+            const class_id = class_details.class_id;
+            const class_name = class_details.class_name;
+            const number_of_students = class_details.number_of_students;
+            const lesson = class_details.lesson;
+
+            const html = `
+            <div class="class-card" data-class-id="${class_id}">
+                <h2>${class_name}</h2>
+                <p><i class="bi bi-book"></i> ${lesson}</p>
+                <p><i class="bi bi-people"></i> ${number_of_students} دانش آموز</p>
             </div>`;
-        document.getElementById("class-list-div").insertAdjacentHTML("beforeend",data)
+
+            document.getElementById("class-list-div").insertAdjacentHTML("beforeend", html);
+
+            const class_card = document.querySelector(`[data-class-id="${class_id}"]`);
+            class_card.addEventListener("click", () => {
+                showClassDetails(class_id);
+            });
         });
-    } 
-    catch (error) {
-        console.log(error)
     }
-    const popup = document.getElementById('classPopup');
-    const closeButton = popup.querySelector('.close-popup');
-    const classCards = document.querySelectorAll('.class-card');
-
-    // Close popup when clicking the close button
-    closeButton.addEventListener('click', () => {
-        popup.classList.remove('active');
-    });
-
-    // Close popup when clicking outside
-    popup.addEventListener('click', (e) => {
-        if (e.target === popup) {
-            popup.classList.remove('active');
-        }
-    });
-
-    // Handle class card clicks
-    classCards.forEach(card => {
-        card.addEventListener('click', () => {
-            const classId = card.getAttribute('data-class-id');
-            showClassDetails(classId);
-        });
-    });
-
 }
 
-function showClassDetails(classId) {
-    const data = classData[classId];
-    if (!data) return;
+function showClassDetails(class_id) {
+    const class_details = list_of_classes.find(details => details.class_id===class_id);
+    //const class_card = document.querySelector(`[data-class-id="${class_id}"]`);
+    const popup = document.getElementById('classPopup');
+    const closeButton = popup.querySelector('.close-popup');
+    const popup_title = popup.querySelector('#popupTitle');
+    const popup_lesson = popup.querySelector('#popupLesson');
+    const popup_class = popup.querySelector('#popupClass');
+    const popup_student_list = popup.querySelector('.student-list');
 
-    // Update popup content
-    document.getElementById('popupTitle').textContent = data.title;
-    document.getElementById('popupProfessor').textContent = data.professor;
-    document.getElementById('popupLessons').textContent = data.lessons;
-    document.getElementById('popupRoom').textContent = data.room;
+    popup_title.textContent = class_details.class_name;
+    popup_lesson.textContent = class_details.lesson;
+    popup_class.textContent = class_details.class_name;
 
-    // Update student list
-    const studentList = document.querySelector('.student-list');
-    studentList.innerHTML = data.students.map(student => `
-        <div class="student-item" style="direction: rtl;">
+    //reset students list
+    popup_student_list.innerHTML = "";
+
+    class_details.students.forEach(student => {
+        const additional_data = `
+        <div class="student-item" style="direction: rtl;" data-student-id=${student.user_id}>
             <div class="student-info">
                 <span class="student-name"><b>نام و نام خانوادگی : </b> ${student.name}</span>
                 <span class="student-id"><b>رشته : </b> ${student.subject}</span>
@@ -111,8 +61,22 @@ function showClassDetails(classId) {
                 </div>
             </div><hr>
         </div>
-    `).join('');
+        `;
+        popup_student_list.insertAdjacentHTML("beforeend",additional_data);
+    });
+    
+    
+    closeButton.addEventListener('click', () => {
+        popup.classList.remove('active');
+    });
+    
+    // Close popup when clicking outside
+    popup.addEventListener('click', (e) => {
+        if (e.target === popup) {
+            popup.classList.remove('active');
+        }
+    });
 
-    // Show popup
-    document.getElementById('classPopup').classList.add('active');
+    //open popup
+    popup.classList.add("active");
 }

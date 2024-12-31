@@ -12,19 +12,196 @@
     <link rel="stylesheet" href="styles/navbar.css" />
     <link rel="stylesheet" href="styles/fonts.css" />
     <link rel="stylesheet" href="styles/class-selection.css" />
+    <link rel="stylesheet" href="styles/homework-reminder.css">
 
-    <script src="js/imports.js"></script>
     <script type="module" src="js/main_script.js"></script>
-    <script src="js/navbar.js" type="module"></script>
-
+    <script src="js/top-navbar.js" type="module"></script>
+    <script src="js/class-popup.js" type="module"></script>
   </head>
+
   <body>
-    <nav id="top-navbar-div" class="top-navbar"></nav>
+    
+    <!--top navbar-->
+    <nav id="top-navbar-div" class="top-navbar">
+      <div class="school-name">مدرسه فرهیختگان</div>
+      <div class="navbar-right">
+        <div class="profile-dropdown">
+          <button class="profile-button">
+            <i class="bi bi-person-circle"></i>
+            <span>پروفایل</span>
+          </button>
+          <div class="dropdown-content">
+            <div class="user-info">
+              <p><strong>نام:</strong> <span id="userName">دانیال خانی</span></p>
+              <p><strong>کلاس:</strong> <span id="userClass">دهم ریاضی تجربی</span></p>
+              <p><strong>پایه:</strong> <span id="userGrade">دهم</span></p>
+              <p><strong>رشته:</strong> <span id="userGrade">ریاضی</span></p>
+              <p><strong>سن:</strong> <span id="userPhone">16</span></p>
+            </div>
+            <a href="#profile" class="dropdown-item" data-page="profile">
+              <i class="bi bi-gear"></i> تنظیمات
+            </a>
+            <a href="#" class="dropdown-item danger">
+              <i class="bi bi-box-arrow-right"></i> خروج
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!--end top navbar-->
+
+    <!--tabs-->
     <main id="tabs-content" style="overflow-y: auto; max-height: 80vh;">
+
+      <div class="class-popup" id="classPopup">
+        <div class="popup-content">
+          <div class="popup-header">
+            <h2 id="popupTitle">Class Title</h2>
+            <button class="close-popup">
+              <i class="bi bi-x-lg"></i>
+            </button>
+          </div>
+          <div class="popup-body">
+            <div class="popup-section">
+              <h1>اطلاعات کلاس</h1>
+              <p><strong>درس:</strong> <span id="popupLesson">-</span></p>
+              <p><strong>کلاس:</strong> <span id="popupClass">-</span></p>
+            </div>
+            <div class="popup-section">
+              <h2>دانش اموزان : </h2><hr>
+              <div class="student-list"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--home tab-->
       <section id="home" class="page active">
         <div id="class-list-div" class="class-list"></div>
       </section>
+      <!--end home tab-->
+
+      <!--attendance tab-->
+      <section id="attendance" class="page">
+        <h1>وضعیت حضور</h1>
+      </section>
+      <!--end attendance tab-->
+
+      <!--home work tab-->
+      <section id="homework" class="page">
+        <h1>تکالیف</h1>
+      </section>
+      <!--end home work tab-->
+
+      <!--messages tab-->
+      <section id="messages" class="page">
+        <h1>پیام ها</h1>
+      </section>  
+      <!--end messages tab-->
+
+      <!--profile tab-->
+      <section id="profile" class="page">
+        <h1>پروفایل</h1>
+      </section>
+      <!--end profile tab-->
+
+      <!--scores tab-->
+      <section id="scores" class="page">
+        <h1>نمرات</h1>
+      </section>
+      <!--end scores tab-->
+
     </main>
-    <nav id="bottom-navbar-div" class="bottom-nav"></nav>
+    <!--end tabs-->
+
+    <!--bottom navbar-->
+    <nav id="bottom-navbar-div" class="bottom-nav">
+      <a href="#profile" class="nav-item" data-page="profile">
+        <i class="bi bi-person"></i>
+        <span>پروفایل</span>
+      </a>
+      
+      <a href="#scores" class="nav-item" data-page="scores">
+        <i class="bi bi-trophy"></i>
+        <span>نمرات</span>
+      </a>
+      
+      <a href="#messages" class="nav-item" data-page="messages">
+        <i class="bi bi-chat-dots"></i>
+        <span>پیام ها</span>
+      </a>
+      
+      <a href="#home" class="nav-item active" data-page="home">
+        <i class="bi bi-house-fill"></i>
+        <span>خانه</span>
+      </a>
+      
+      <a href="#homework" class="nav-item" data-page="homework">
+        <i class="bi bi-book"></i>
+        <span>تکالیف</span>
+      </a>
+      
+      <a href="#attendance" class="nav-item" data-page="attendance">
+        <i class="bi bi-calendar-check"></i>
+        <span>حضور</span>
+      </a>
+    </nav>
+    <!--end bottom navbar-->
+
   </body>
 </html>
+
+
+<!--<div class="container py-5" style="direction: rtl;">
+
+  <header class="mb-4">
+    <h1 class="display-5 mb-3">
+      <i class="bi bi-calendar-week text-primary"></i>
+      تکالیف فردا
+    </h1>
+  </header>
+
+  <div class="row g-4">
+    
+    Mathematics Card:
+    <div class="col-md-6">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="h4 mb-0">ریاضی</h2>
+          </div>
+          <div class="homework-section">
+            <h3 class="h6 text-danger mb-2">
+              <i class="bi bi-journal-text"></i>
+              توضیحات
+            </h3>
+            <p class="mb-1">زیاد گوز گوز نکنید</p>
+            <small class="text-muted">مهلت : 1043/10/7</small>
+          </div>
+        </div>
+      </div>
+    </div>
+    :end math card
+
+    Physics Card:
+    <div class="col-md-6">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="h4 mb-0">فیزیک</h2>
+          </div>
+          <div class="homework-section">
+            <h3 class="h6 text-danger mb-2">
+              <i class="bi bi-journal-text"></i>
+              توضیحات
+            </h3>
+            <p class="mb-1">زیاد گوز گوز کنید توی اسانسور</p>
+            <small class="text-muted">مهلت : 1043/10/7</small>
+          </div>
+        </div>
+      </div>
+    </div>
+    :end Physics Card
+    
+  </div>
+</div>-->

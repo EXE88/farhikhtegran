@@ -1,4 +1,4 @@
-import { initializeNavbar } from './navbar.js';
+import { initializeNavbar } from './top-navbar.js';
 import { initializeClassPopup } from './class-popup.js';
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -1,5 +1,5 @@
 import { initializeNavbar } from './top-navbar.js';
-import { initializeClassPopup } from './class-popup.js';
+import { initializeClassPopup } from './module-scripts.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize navbar

@@ -1,6 +1,15 @@
 export const global_data = {
     user_id:2,
-    is_teacher:true
+    is_teacher:true,
+    username:1452381459,
+    fist_name:"صمد",
+    last_name:"مرادی",
+    age:34,
+    national_code:1452381459,
+    lessons:['ریاضی','فیزیک'],
+    subject:"تجربی",
+    grade:"دهم",
+    school_class:"دهم ریاضی تجربی"
 };
 
 export const list_of_classes = [

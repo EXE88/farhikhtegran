@@ -14,9 +14,10 @@
     <link rel="stylesheet" href="styles/class-selection.css" />
     <link rel="stylesheet" href="styles/homework-reminder.css">
 
-    <script type="module" src="js/main_script.js"></script>
+    <script type="module" src="js/init-script.js"></script>
     <script src="js/top-navbar.js" type="module"></script>
-    <script src="js/class-popup.js" type="module"></script>
+    <script src="js/module-scripts.jsx" type="module"></script>
+    <script src="js/normal-scripts.js"></script>
   </head>
 
   <body>
@@ -26,18 +27,11 @@
       <div class="school-name">مدرسه فرهیختگان</div>
       <div class="navbar-right">
         <div class="profile-dropdown">
-          <button class="profile-button">
+          <button class="profile-button" id="profile-button-id">
             <i class="bi bi-person-circle"></i>
             <span>پروفایل</span>
           </button>
-          <div class="dropdown-content">
-            <div class="user-info">
-              <p><strong>نام:</strong> <span id="userName">دانیال خانی</span></p>
-              <p><strong>کلاس:</strong> <span id="userClass">دهم ریاضی تجربی</span></p>
-              <p><strong>پایه:</strong> <span id="userGrade">دهم</span></p>
-              <p><strong>رشته:</strong> <span id="userGrade">ریاضی</span></p>
-              <p><strong>سن:</strong> <span id="userPhone">16</span></p>
-            </div>
+          <div class="dropdown-content" id="dropdown-content-div">
             <a href="#profile" class="dropdown-item" data-page="profile">
               <i class="bi bi-gear"></i> تنظیمات
             </a>

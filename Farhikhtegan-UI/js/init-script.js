@@ -1,12 +1,21 @@
 import { initializeNavbar } from './top-navbar.js';
 import { initializeClassPopup } from './module-scripts.js';
+import { initializeHomeworks } from "./module-scripts.js";
+import { ShowProfileDropdownDatas } from './module-scripts.js';
+import { global_data } from './data.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize navbar
   initializeNavbar();
 
-  //Initialize class popup
-  initializeClassPopup();
+  if (global_data.is_teacher===true){
+    //Initialize class popup
+    initializeClassPopup();
+  }else{
+    initializeHomeworks();
+  }
+
+  ShowProfileDropdownDatas();
   
   // Bottom navigation functionality
   const navItems = document.querySelectorAll('.nav-item');

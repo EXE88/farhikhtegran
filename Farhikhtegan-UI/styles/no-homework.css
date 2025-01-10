@@ -1,0 +1,24 @@
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    font-family: "vazir";
+}
+
+.icon-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.icon {
+    width: 4rem;
+    height: 4rem;
+    color: #D1D5DB;
+}
+
+.title {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #4B5563;
+    margin-bottom: 0.5rem;
+}

@@ -6,6 +6,7 @@ class Comment(models.Model):
     from_teacher = models.ForeignKey(User,on_delete=models.CASCADE,blank=False,related_name="comments_as_teacher")
     to_student = models.ForeignKey(User,on_delete=models.CASCADE,blank=False,related_name="comments_as_student")
     description = models.TextField(max_length=500,blank=False)
+    checked = models.BooleanField(default=False , blank=False)
     created_at = models.DateTimeField(auto_now_add=True,blank=False)
     updated_at = models.DateTimeField(auto_now=True,blank=False)
 

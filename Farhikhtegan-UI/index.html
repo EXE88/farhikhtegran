@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="styles/class-selection.css" />
     <link rel="stylesheet" href="styles/homework-reminder.css">
     <link rel="stylesheet" href="styles/no-homework.css">
+    <link rel="stylesheet" href="styles/login-page.css">
 
     <script type="module" src="js/init-script.js"></script>
     <script src="js/top-navbar.js" type="module"></script>
@@ -22,126 +23,160 @@
   </head>
 
   <body>
-    
-    <!--top navbar-->
-    <nav id="top-navbar-div" class="top-navbar">
-      <div class="school-name">مدرسه فرهیختگان</div>
-      <div class="navbar-right">
-        <div class="profile-dropdown">
-          <button class="profile-button" id="profile-button-id">
-            <i class="bi bi-person-circle"></i>
-            <span>پروفایل</span>
-          </button>
-          <div class="dropdown-content" id="dropdown-content-div">
-            <a href="#profile" class="dropdown-item" data-page="profile">
-              <i class="bi bi-gear"></i> تنظیمات
-            </a>
-            <a href="#" class="dropdown-item danger">
-              <i class="bi bi-box-arrow-right"></i> خروج
-            </a>
+
+    <div id="loginPage" class="hidden">
+      <section class="vh-100 gradient-custom">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+              <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                <div class="card-body p-5 text-center">
+      
+                  <div class="mb-md-5 mt-md-4 pb-5">
+      
+                    <h2 class="fw-bold mb-2 text-uppercase" style="font-size: 28px;">به اپ فرهیختگان منتظر خوش آمدید</h2>
+                    <p class="text-white-50 mb-5">! لطفا به حساب کاربری خود وارد شوید</p>
+      
+                    <div data-mdb-input-init class="form-outline form-white mb-4">
+                      <input type="username" id="typeUsernameX" class="form-control form-control-lg" />
+                      <label class="form-label" for="typeUsernameX">نام کاربری</label>
+                    </div>
+      
+                    <div data-mdb-input-init class="form-outline form-white mb-4">
+                      <input type="password" id="typePasswordX" class="form-control form-control-lg" />
+                      <label class="form-label" for="typePasswordX">رمزعبور</label>
+                    </div>
+      
+                    <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" type="submit" id="login-form-submit-button">تایید و ورود</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </nav>
-    <!--end top navbar-->
+      </section>
+    </div>
 
-    <!--tabs-->
-    <main id="tabs-content" style="overflow-y: auto; max-height: 80vh;">
-
-      <div class="class-popup" id="classPopup">
-        <div class="popup-content">
-          <div class="popup-header">
-            <h2 id="popupTitle">Class Title</h2>
-            <button class="close-popup">
-              <i class="bi bi-x-lg"></i>
+    <div id="dashboard"> 
+      <!--top navbar-->
+      <nav id="top-navbar-div" class="top-navbar">
+        <div class="school-name">مدرسه فرهیختگان</div>
+        <div class="navbar-right">
+          <div class="profile-dropdown">
+            <button class="profile-button" id="profile-button-id">
+              <i class="bi bi-person-circle"></i>
+              <span>پروفایل</span>
             </button>
-          </div>
-          <div class="popup-body">
-            <div class="popup-section">
-              <h1>اطلاعات کلاس</h1>
-              <p><strong>درس:</strong> <span id="popupLesson">-</span></p>
-              <p><strong>کلاس:</strong> <span id="popupClass">-</span></p>
-            </div>
-            <div class="popup-section">
-              <h2>دانش اموزان : </h2><hr>
-              <div class="student-list"></div>
+            <div class="dropdown-content" id="dropdown-content-div">
+              <a href="#profile" class="dropdown-item" data-page="profile">
+                <i class="bi bi-gear"></i> تنظیمات
+              </a>
+              <a href="#" class="dropdown-item danger">
+                <i class="bi bi-box-arrow-right"></i> خروج
+              </a>
             </div>
           </div>
         </div>
-      </div>
+      </nav>
+      <!--end top navbar-->
 
-      <!--home tab-->
-      <section id="home" class="page active">
-        <div id="class-list-div" class="class-list"></div>
-      </section>
-      <!--end home tab-->
+      <!--tabs-->
+      <main id="tabs-content" style="overflow-y: auto; max-height: 80vh;">
 
-      <!--attendance tab-->
-      <section id="attendance" class="page">
-        <h1>وضعیت حضور</h1>
-      </section>
-      <!--end attendance tab-->
+        <div class="class-popup" id="classPopup">
+          <div class="popup-content">
+            <div class="popup-header">
+              <h2 id="popupTitle">Class Title</h2>
+              <button class="close-popup">
+                <i class="bi bi-x-lg"></i>
+              </button>
+            </div>
+            <div class="popup-body">
+              <div class="popup-section">
+                <h1>اطلاعات کلاس</h1>
+                <p><strong>درس:</strong> <span id="popupLesson">-</span></p>
+                <p><strong>کلاس:</strong> <span id="popupClass">-</span></p>
+              </div>
+              <div class="popup-section">
+                <h2>دانش اموزان : </h2><hr>
+                <div class="student-list"></div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-      <!--home work tab-->
-      <section id="homework" class="page">
-        <h1>تکالیف</h1>
-      </section>
-      <!--end home work tab-->
+        <!--home tab-->
+        <section id="home" class="page active">
+          <div id="class-list-div" class="class-list"></div>
+        </section>
+        <!--end home tab-->
 
-      <!--messages tab-->
-      <section id="messages" class="page">
-        <h1>پیام ها</h1>
-      </section>  
-      <!--end messages tab-->
+        <!--attendance tab-->
+        <section id="attendance" class="page">
+          <h1>وضعیت حضور</h1>
+        </section>
+        <!--end attendance tab-->
 
-      <!--profile tab-->
-      <section id="profile" class="page">
-        <h1>پروفایل</h1>
-      </section>
-      <!--end profile tab-->
+        <!--home work tab-->
+        <section id="homework" class="page">
+          <h1>تکالیف</h1>
+        </section>
+        <!--end home work tab-->
 
-      <!--scores tab-->
-      <section id="scores" class="page">
-        <h1>نمرات</h1>
-      </section>
-      <!--end scores tab-->
+        <!--messages tab-->
+        <section id="messages" class="page">
+          <h1>پیام ها</h1>
+        </section>  
+        <!--end messages tab-->
 
-    </main>
-    <!--end tabs-->
+        <!--profile tab-->
+        <section id="profile" class="page">
+          <h1>پروفایل</h1>
+        </section>
+        <!--end profile tab-->
 
-    <!--bottom navbar-->
-    <nav id="bottom-navbar-div" class="bottom-nav">
-      <a href="#profile" class="nav-item" data-page="profile">
-        <i class="bi bi-person"></i>
-        <span>پروفایل</span>
-      </a>
-      
-      <a href="#scores" class="nav-item" data-page="scores">
-        <i class="bi bi-trophy"></i>
-        <span>نمرات</span>
-      </a>
-      
-      <a href="#messages" class="nav-item" data-page="messages">
-        <i class="bi bi-chat-dots"></i>
-        <span>پیام ها</span>
-      </a>
-      
-      <a href="#home" class="nav-item active" data-page="home">
-        <i class="bi bi-house-fill"></i>
-        <span>خانه</span>
-      </a>
-      
-      <a href="#homework" class="nav-item" data-page="homework">
-        <i class="bi bi-book"></i>
-        <span>تکالیف</span>
-      </a>
-      
-      <a href="#attendance" class="nav-item" data-page="attendance">
-        <i class="bi bi-calendar-check"></i>
-        <span>حضور</span>
-      </a>
-    </nav>
-    <!--end bottom navbar-->
+        <!--scores tab-->
+        <section id="scores" class="page">
+          <h1>نمرات</h1>
+        </section>
+        <!--end scores tab-->
 
+      </main>
+      <!--end tabs-->
+
+      <!--bottom navbar-->
+      <nav id="bottom-navbar-div" class="bottom-nav">
+        <a href="#profile" class="nav-item" data-page="profile">
+          <i class="bi bi-person"></i>
+          <span>پروفایل</span>
+        </a>
+        
+        <a href="#scores" class="nav-item" data-page="scores">
+          <i class="bi bi-trophy"></i>
+          <span>نمرات</span>
+        </a>
+        
+        <a href="#messages" class="nav-item" data-page="messages">
+          <i class="bi bi-chat-dots"></i>
+          <span>پیام ها</span>
+        </a>
+        
+        <a href="#home" class="nav-item active" data-page="home">
+          <i class="bi bi-house-fill"></i>
+          <span>خانه</span>
+        </a>
+        
+        <a href="#homework" class="nav-item" data-page="homework">
+          <i class="bi bi-book"></i>
+          <span>تکالیف</span>
+        </a>
+        
+        <a href="#attendance" class="nav-item" data-page="attendance">
+          <i class="bi bi-calendar-check"></i>
+          <span>حضور</span>
+        </a>
+      </nav>
+      <!--end bottom navbar-->
+    </div>
   </body>
 </html>

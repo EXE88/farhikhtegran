@@ -181,3 +181,123 @@ export function initializeHomeworks() {
         });
     }
 }
+
+export async function loginNeed() {
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
+
+    if (refreshToken && accessToken) {
+        const requestHeaders = new Headers();
+        requestHeaders.append("Authorization", "Bearer " + String(accessToken));
+
+        const requestOptions = {
+            method: "POST",
+            headers: requestHeaders,
+            redirect: "follow"
+        };
+
+        try {
+            const response = await fetch('http://127.0.0.1:8000/users/verifytokens/', requestOptions);
+            if (response.status === 200) {
+                return false;
+            } else if (response.status === 401) {
+                const formdata = new FormData();
+                formdata.append("refresh", refreshToken);
+
+                const refreshRequestOptions = {
+                    method: "POST",
+                    body: formdata,
+                    redirect: "follow"
+                };
+
+                const refreshResponse = await fetch("http://127.0.0.1:8000/api/token/refresh/", refreshRequestOptions);
+                if (refreshResponse.status === 200) {
+                    const response_json = await refreshResponse.json();
+                    localStorage.setItem("accessToken", response_json.access);
+                    localStorage.setItem("refreshToken", response_json.refresh);
+                    return false;
+                } else if (refreshResponse.status === 401) {
+                    console.log(await refreshResponse.json());
+                    return true;
+                } else {
+                    console.log("error");
+                    return true;
+                }
+            } else {
+                console.log(response.status);
+                console.log("error...");
+                return true;
+            }
+        } catch (error) {
+            console.log(error);
+            return true;
+        }
+    } else {
+        return true;
+    }
+}
+
+export function loginProccess() {
+    const dashboard = document.getElementById("dashboard");
+    const loginPage = document.getElementById("loginPage");
+    const loginButton = document.getElementById("login-form-submit-button");
+
+    dashboard.classList.add("hidden");
+    loginPage.classList.remove("hidden");
+
+    loginButton.addEventListener('click', () => {
+        sendData();
+    });
+
+    async function sendData() {
+        const username = document.getElementById("typeUsernameX").value;
+        const password = document.getElementById("typePasswordX").value;
+
+        const formdata = new FormData();
+        formdata.append("username", String(username));
+        formdata.append("password", String(password));
+
+        const requestOptions = {
+            method: "POST",
+            body: formdata,
+            redirect: "follow"
+        };
+
+        if (username && password) {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/token/', requestOptions);
+                if (response.status === 200) {      
+                    const response_json = await response.json();
+                    console.log(response_json);
+                    localStorage.setItem("accessToken", response_json.access);
+                    localStorage.setItem("refreshToken", response_json.refresh);
+                    showMessage("با موفقیت وارد شدید", 1300, "alert-success");
+                    async function runInOrder() {
+                        await ShowProfileDropdownDatas();
+                        if (global_data.is_teacher === true) {
+                            await initializeClassPopup();
+                        } 
+                        else {
+                            await initializeHomeworks();
+                        }
+                        const loginPage = document.getElementById("loginPage");
+                        const dashboard = document.getElementById("dashboard");
+
+                        loginPage.classList.add("hidden");
+                        dashboard.classList.remove("hidden");
+                    }
+                    runInOrder();
+                } 
+                else {
+                    showMessage("حساب کاربری با این مشخصات یافت نشد", 1300, "alert-danger");
+                }
+            } 
+            catch (error) {
+                console.error(error);
+            }
+        } 
+        else {
+            showMessage("لطفا مقادیر را کامل وارد کنید", 1300, "alert-warning");
+        }
+    }
+}

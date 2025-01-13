@@ -1,6 +1,6 @@
 export const global_data = {
     user_id:2,
-    is_teacher:false,
+    is_teacher:true,
     username:1452381459,
     fist_name:"صمد",
     last_name:"مرادی",

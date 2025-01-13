@@ -25,6 +25,10 @@ main {
   min-height: calc(100vh - 140px); /* Account for top and bottom nav */
 }
 
+.hidden {
+  display: none !important;
+}
+
 .page {
   display: none;
   padding: 16px;

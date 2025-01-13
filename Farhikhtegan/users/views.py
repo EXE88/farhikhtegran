@@ -5,3 +5,9 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from .models import AllUsersMetaData
+
+class VerifyTokens(APIView):
+    authentication_classes = [JWTAuthentication]
+
+    def post(self,request):
+        return Response({"valid":True},200)

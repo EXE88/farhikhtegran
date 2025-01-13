@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'homeworks',
     'attendance',
     'comments',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -44,6 +45,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = 'Farhikhtegan.urls'
@@ -130,6 +132,8 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': True,  #reset refresh token and generate new one
     'BLACKLIST_AFTER_ROTATION': True, 
 }
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

@@ -28,7 +28,7 @@ class GetUserInfo(APIView):
                 "last_name":user_AllUsersMetaData_class.last_name,
                 "age":user_AllUsersMetaData_class.age,
                 "national_code":user_User_class.username,
-                "lessons":TeachersMetaData.objects.get(user=request.user).lessons
+                "lessons":[lesson.name for lesson in TeachersMetaData.objects.get(user=request.user).lessons.all()]
             }
         else:
             data = {

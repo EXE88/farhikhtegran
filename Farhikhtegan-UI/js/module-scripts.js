@@ -92,9 +92,9 @@ function showClassDetails(class_id) {
     popup.classList.add("active");
 }
 
-export function ShowProfileDropdownDatas() {
+export function ShowProfileDropdownDatas(global_data) {
     if (global_data.is_teacher===true) {
-        const first_name = global_data.fist_name;
+        const first_name = global_data.first_name;
         const last_name = global_data.last_name;
         const age = global_data.age;
         const national_code = global_data.national_code;
@@ -109,7 +109,7 @@ export function ShowProfileDropdownDatas() {
         </div>`;
         document.getElementById("dropdown-content-div").insertAdjacentHTML("afterbegin",html);
     }else{
-        const first_name = global_data.fist_name;
+        const first_name = global_data.first_name;
         const last_name = global_data.last_name;
         const age = global_data.age;
         const national_code = global_data.national_code;
@@ -133,7 +133,6 @@ export function ShowProfileDropdownDatas() {
 export function initializeHomeworks() {
     const cards_div_html = `
     <div class="container py-5" style="direction: rtl;" >
-
         <header class="mb-4">
             <h1 class="display-5 mb-3">
                 <i class="bi bi-calendar-week text-primary"></i>
@@ -267,26 +266,41 @@ export function loginProccess() {
             try {
                 const response = await fetch('http://127.0.0.1:8000/api/token/', requestOptions);
                 if (response.status === 200) {      
+                    
                     const response_json = await response.json();
                     console.log(response_json);
+
                     localStorage.setItem("accessToken", response_json.access);
                     localStorage.setItem("refreshToken", response_json.refresh);
                     showMessage("با موفقیت وارد شدید", 1300, "alert-success");
-                    async function runInOrder() {
-                        await ShowProfileDropdownDatas();
-                        if (global_data.is_teacher === true) {
-                            await initializeClassPopup();
-                        } 
-                        else {
-                            await initializeHomeworks();
-                        }
-                        const loginPage = document.getElementById("loginPage");
-                        const dashboard = document.getElementById("dashboard");
 
-                        loginPage.classList.add("hidden");
-                        dashboard.classList.remove("hidden");
-                    }
-                    runInOrder();
+                    const accessToken = localStorage.getItem("accessToken");
+                    const requestHeaders = new Headers();
+                    requestHeaders.append("Authorization", "Bearer " + String(accessToken));
+                  
+                    const requestOptions = {
+                        method: "GET",
+                        headers: requestHeaders,
+                        redirect: "follow"
+                    };
+
+                    fetch("http://127.0.0.1:8000/users/getuserinfo/",requestOptions)
+                    .then(response => response.json())
+                    .then(data => {
+                      ShowProfileDropdownDatas(data);
+                      if (data.is_teacher === true) {
+                        initializeClassPopup();
+                      }
+                      else {
+                        initializeHomeworks();
+                      }
+                    })
+
+                    const loginPage = document.getElementById("loginPage");
+                    const dashboard = document.getElementById("dashboard");
+
+                    loginPage.classList.add("hidden");
+                    dashboard.classList.remove("hidden");
                 } 
                 else {
                     showMessage("حساب کاربری با این مشخصات یافت نشد", 1300, "alert-danger");

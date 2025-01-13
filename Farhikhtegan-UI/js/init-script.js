@@ -1,6 +1,5 @@
 import { initializeNavbar } from './top-navbar.js';
 import { initializeClassPopup, initializeHomeworks, ShowProfileDropdownDatas, loginNeed, loginProccess } from './module-scripts.js';
-import { global_data } from './data.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
   // Initialize navbar
@@ -10,16 +9,27 @@ document.addEventListener('DOMContentLoaded', async () => {
     loginProccess();
   } 
   else {
-    async function runInOrder() {
+    const accessToken = localStorage.getItem("accessToken");
+    const requestHeaders = new Headers();
+    requestHeaders.append("Authorization", "Bearer " + String(accessToken));
+  
+    const requestOptions = {
+        method: "GET",
+        headers: requestHeaders,
+        redirect: "follow"
+    };
+  
+    fetch("http://127.0.0.1:8000/users/getuserinfo/",requestOptions)
+    .then(response => response.json())
+    .then(global_data => {
+      ShowProfileDropdownDatas(global_data);
       if (global_data.is_teacher === true) {
-        await initializeClassPopup();
-      } 
-      else {
-        await initializeHomeworks();
+        initializeClassPopup();
       }
-      await ShowProfileDropdownDatas();
-    }
-    runInOrder();
+      else {
+        initializeHomeworks();
+      }
+    })
   }
 
   

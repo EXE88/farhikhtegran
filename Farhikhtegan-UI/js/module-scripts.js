@@ -1,4 +1,4 @@
-import {list_of_classes , global_data , homeworks} from "./data.js";
+import {list_of_classes , homeworks} from "./data.js";
 
 //list classes
 export function initializeClassPopup() {

@@ -1,7 +1,3 @@
-export const global_data = {
-    "is_teacher":true
-};
-
 export const homeworks = [
     {
         homework_id:14,

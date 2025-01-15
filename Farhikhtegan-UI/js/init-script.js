@@ -19,19 +19,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         redirect: "follow"
     };
   
-    fetch("http://127.0.0.1:8000/users/getuserinfo/",requestOptions)
-    .then(response => response.json())
-    .then(global_data => {
-      ShowProfileDropdownDatas(global_data);
-      if (global_data.is_teacher === true) {
-        initializeClassPopup();
-      }
-      else {
-        initializeHomeworks();
-      }
-    })
-  }
+    async function getGlobalData(){
+      const response = await fetch("http://127.0.0.1:8000/users/getuserinfo/", requestOptions);
+      const data = await response.json();
+      return data;
+    }
 
+    const global_data = await getGlobalData();
+    ShowProfileDropdownDatas(global_data);
+    if (global_data.is_teacher === true) {
+      initializeClassPopup();
+    }
+    else {
+      initializeHomeworks();
+    }
+  }
   
   // Bottom navigation functionality
   const navItems = document.querySelectorAll('.nav-item');
